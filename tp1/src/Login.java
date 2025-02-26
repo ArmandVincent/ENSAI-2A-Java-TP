@@ -9,10 +9,23 @@ public class Login {
         HashMap<String, String> userDatabase = loadUserDatabase("../data/user_hashpwd.csv");
         Scanner scanner = new Scanner(System.in);
 
-        while (true) {
+        boolean bool = true;
+        while (bool) {
+            System.out.print("Enter username: ");
+            String username = scanner.nextLine();
 
-            // Code here
+            for (int i = 1; i < 4; i++) {
+                System.out.print("Enter password: ");
+                String password = scanner.nextLine();
+                if (userDatabase.get(username).equals(password)) {
+                    System.out.println("Login successful!");
+                    scanner.close();
+                    bool = false;
+                    return;
+                }
+            }
         }
+        scanner.close();
     }
 
     /**

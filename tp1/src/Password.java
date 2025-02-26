@@ -1,6 +1,9 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -110,9 +113,13 @@ public class Password {
      */
     public static HashMap<String, Boolean> checkPasswordsList(ArrayList<String> passwords) {
 
-        // Code here
+        HashMap<String, Boolean> hash = new HashMap<>();
 
-        return null;
+        for (int i = 0; i < passwords.size(); i++) {
+            hash.put(passwords.get(i), isStrongPassword(passwords.get(i)));
+        }
+
+        return hash;
     }
 
     /**
@@ -129,9 +136,49 @@ public class Password {
      */
     public static String generatePassword(int nbCar) {
 
-        // Code here
+        if (nbCar < 4) {
+            return null;
+        }
 
-        return null;
+        List<Character> listechiffre = new ArrayList<>();
+        listechiffre.addAll(List.of('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'));
+
+        List<Character> listecaracminus = new ArrayList<>();
+        listecaracminus.addAll(List.of('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
+                'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'));
+
+        List<Character> listecaracmaj = new ArrayList<>();
+        listecaracmaj.addAll(List.of('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+                'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'));
+
+        List<Character> listecaraspe = new ArrayList<>();
+        listecaraspe.addAll(List.of('!', '"', '#', '$', '%', '&', '(', ')', '*', '+', ',', '-', '.', '/', ':', ';',
+                '<', '=', '>', '?', '@', '[', ']', '^', '_', '`', '{', '|', '}', '~'));
+
+        SecureRandom random = new SecureRandom();
+
+        String mdp = "";
+
+        mdp = mdp + listechiffre.get(random.nextInt(listechiffre.size()))
+                + listecaracmaj.get(random.nextInt(listecaracmaj.size()))
+                + listecaracminus.get(random.nextInt(listecaracminus.size()))
+                + listecaraspe.get(random.nextInt(listecaraspe.size()));
+
+        for (int i = 0; i < nbCar - 4; i++) {
+            int longueurtot = listechiffre.size() + listecaracmaj.size() + listecaracminus.size() + listecaraspe.size();
+            List<Character> listetot = new ArrayList<>();
+            listetot.addAll(listecaracmaj);
+            listetot.addAll(listecaraspe);
+            listetot.addAll(listecaracminus);
+            listetot.addAll(listechiffre);
+
+            mdp = mdp + listetot.get(random.nextInt(longueurtot));
+
+        }
+        List<String> liste = new ArrayList<String>(Arrays.asList(mdp.split(",")));
+        Collections.shuffle(liste);
+        String mdp2 = String.join(", ", liste);
+        return mdp2;
     }
 
     public static void main(String[] args) {
