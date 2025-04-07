@@ -1,5 +1,5 @@
 server:
-  port: 9000
+  port: 5000
 
 spring:
   application:
@@ -10,10 +10,10 @@ spring:
     prefix: classpath:/templates/
     suffix: .html
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:bootapp;DB_CLOSE_DELAY=-1
-    username: sa
-    password: password
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://postgresql-428638.user-armand:5432/defaultdb
+    username: user-armand
+    password: ipkoryuxe24q7wgakv5c
   jpa:
     hibernate:
       ddl-auto: update
